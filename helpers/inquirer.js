@@ -16,7 +16,37 @@ const preguntas = [
       },
       {
         value: "2",
-        name: `${"2.".green}Integrantes`,
+        name: `${"2.".green}Tokens`,
+      },
+      {
+        value: "3",
+        name: `${"3.".green}Integrantes`,
+      },
+    ],
+  },
+];
+
+const tokens = [
+  {
+    type: "list",
+    name: "opcion",
+    message: "¿Elige una opción para saber su descripción?",
+    choices: [
+      {
+        value: "1",
+        name: `${"1.".green}Indicadores`,
+      },
+      {
+        value: "2",
+        name: `${"2.".green}Números reales`,
+      },
+      {
+        value: "3",
+        name: `${"3.".green}Operadores relacionales`,
+      },
+      {
+        value: "4",
+        name: `${"4.".green}Palabras reservadas`,
       },
     ],
   },
@@ -25,10 +55,21 @@ const preguntas = [
 const inquirerMenu = async () => {
   console.clear();
   console.log("===========================".green);
+  console.log("      PROYECTO INF 154".rainbow);
   console.log("   Seleccione una opcion".white);
   console.log("===========================\n".green);
 
   const { opcion } = await inquirer.prompt(preguntas);
+  return opcion;
+};
+
+const tokensDesc = async () => {
+  console.clear();
+  console.log("===========================".green);
+  console.log("   Seleccione una opcion".white);
+  console.log("===========================\n".green);
+
+  const { opcion } = await inquirer.prompt(tokens);
   return opcion;
 };
 
@@ -83,7 +124,8 @@ const verificarCadena = async (cadena) => {
   let i = 0;
   let simbolo = 0;
   console.log("estado inicial : q0");
-  while ((estado != qf[0], estado != 72 && i < cadena.length)) {
+
+  while ((estado != qf[0], estado != 63 && i < cadena.length)) {
     const sub = cadena[i];
 
     // obteniendo el numero para el simbolo
@@ -106,7 +148,7 @@ const verificarCadena = async (cadena) => {
   }
 
   // mostrando resultado
-  console.log("Estado final "+estado);
+  console.log("Estado final " + estado);
   console.log(colors.magenta("RESULTADO: "));
   if (
     estado == qf[0] ||
@@ -129,26 +171,27 @@ const verificarCadena = async (cadena) => {
     estado == qf[17]
   ) {
     console.log("Cadena Aceptada".green);
-    
-    if (
-      estado == 6 ||
-      estado == 9 ||
-      estado == 13 ||
-      estado == 26 ||
-      estado == 31 ||
-      estado == 41 ||
-      estado == 47
-    ) {
-      console.log(colors.green("Palabra reservada"));
-    }
-    if (estado == 71) {
+
+    if (estado == 5) {
       console.log(colors.green("Indicador"));
     }
-    if (estado == 55 || estado == 58 || estado == 61 || estado == 64 || estado == 70) {
+    if (estado == 7 || estado == 10 || estado == 63 || estado == 15) {
       console.log(colors.green("Número Real"));
     }
-    if (estado == 49 || estado == 51 || estado == 53) {
+    if (estado == 17 || estado == 19 || estado == 21 || estado == 23) {
       console.log("Operador relacional".green);
+    }
+    if (
+      estado == 28 ||
+      estado == 30 ||
+      estado == 32 ||
+      estado == 37 ||
+      estado == 47 ||
+      estado == 43 ||
+      estado == 53 ||
+      estado == 62
+    ) {
+      console.log(colors.green("Palabra Reservada"));
     }
   } else {
     console.log(estado);
@@ -156,4 +199,85 @@ const verificarCadena = async (cadena) => {
   }
 };
 
-module.exports = { inquirerMenu, pausa, leerInput, verificarCadena };
+
+const indicadoresDesc=  () => {
+  console.log("===========================".green);
+  console.log("   INDICADORES".rainbow);
+  console.log("===========================\n".green);
+  console.log(`
+* Los únicos caracteres permitidos para los identificadores son todos los caracteres ${"alfanuméricos".green},
+ ${"“$”".green}(signo de dólar) y ${"‘_’".green} (guión bajo).
+
+* Los identificadores no deben comenzar con dígitos (). Por ejemplo, “123java” no es un identificador de Java válido.
+
+* Los identificadores de Java distinguen entre mayúsculas y minúsculas.
+
+* No hay límite en la longitud del identificador, pero es aconsejable usar solamente una longitud óptima de 4 a 15 caracteres.
+
+* Las palabras reservadas no se pueden usar como un identificador.
+  `)
+}
+
+const numerosDesc=  () => {
+  console.log("===========================".green);
+  console.log("   NÚMEROS REALES".rainbow);
+  console.log("===========================\n".green);
+  console.log(`
+  Los números reales son cualquier número que corresponda a un punto en la recta real 
+  y pueden clasificarse en números naturales, enteros, racionales e irracionales.
+  
+  ${"Ej".green}
+      R = {-1, -2, -3 , 0 , 1 , 2 , 3 , 3.4 , 44.65 , -98.32 , etc..}
+  `)
+}
+
+const operadoresDesc=  () => {
+  console.log("===========================".green);
+  console.log("   NÚMEROS REALES".rainbow);
+  console.log("===========================\n".green);
+  console.log(`
+  Los operadores relacionales son símbolos que se usan para comparar dos valores. 
+  Si el resultado de la comparación es correcto la expresión considerada es verdadera, en caso contrario es falsa.
+
+  ${"Simbolos:".green}
+            { < , > , == , != , >= , <= }
+  `)
+}
+
+const palabrasDesc=  () => {
+  console.log("===========================".green);
+  console.log("   PALABRAS RESERVADAS".rainbow);
+  console.log("===========================\n".green);
+  console.log(`
+  Cualquier lenguaje de programación reserva algunas palabras para representar funcionalidades definidas por ese lenguaje. 
+  Estas palabras se llaman palabras reservadas.
+
+  ${"Palabras reservadas en el proyecto : ".green}
+          {while,  do, for, class, return, float, public, protected}
+  `)
+}
+
+const integrantes =  () => {
+  console.log("================================".green);
+  console.log("   INTEGRANTES DEL PROYECTO".rainbow);
+  console.log("================================\n".green);
+  console.log(`
+    * Ninahuanca Ayala Victor Manuel
+    * Uruchi Quispe Dania Daniela
+  `)
+}
+
+
+
+module.exports = {
+  inquirerMenu,
+  pausa,
+  leerInput,
+  verificarCadena,
+  tokensDesc,
+  indicadoresDesc,
+  numerosDesc,
+  operadoresDesc,
+  palabrasDesc,
+  integrantes
+};
