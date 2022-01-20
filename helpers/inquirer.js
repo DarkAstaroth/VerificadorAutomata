@@ -12,15 +12,19 @@ const preguntas = [
     choices: [
       {
         value: "1",
-        name: `${"1.".green}Verificar Cadena`,
+        name: `${"1.".green}Verificar Token`,
       },
       {
         value: "2",
-        name: `${"2.".green}Tokens`,
+        name: `${"2.".green}Verificar Cadena`,
       },
       {
         value: "3",
-        name: `${"3.".green}Integrantes`,
+        name: `${"3.".green}Tokens`,
+      },
+      {
+        value: "4",
+        name: `${"4.".green}Integrantes`,
       },
     ],
   },
@@ -104,7 +108,7 @@ const leerInput = async (mensaje) => {
   return desc;
 };
 
-const verificarCadena = async (cadena) => {
+const verificarToken = async (cadena) => {
   console.log("cadena:".green + " " + colors.blue(cadena));
   let e = "";
 
@@ -140,6 +144,7 @@ const verificarCadena = async (cadena) => {
       console.log(colors.yellow("siguiente estado : q" + estado + ""));
     } else {
       console.log(colors.red("No existe siguiente estado"));
+      console.log(colors.red("Cadena Rechazada"));
       return;
     }
 
@@ -199,13 +204,109 @@ const verificarCadena = async (cadena) => {
   }
 };
 
+const verificarCadena = async (cadena) => {
+  console.log("cadena:".green + " " + colors.blue(cadena));
+  let e = "";
 
-const indicadoresDesc=  () => {
+  // imprimir cadena
+  for (let i = 0; i < cadena.length; i++) {
+    if (cadena[i] == " ") {
+      e = e + `"_"`;
+    } else {
+      e = e + cadena[i] + ", ";
+    }
+  }
+  console.log(`E = { ${e} }`);
+
+  // Verficar Cadena
+
+  let estado = 0;
+  let i = 0;
+  let simbolo = 0;
+  let msg = 0;
+  while ((estado != qf[0], estado != 63 && i < cadena.length)) {
+    msg = 0;
+    const sub = cadena[i];
+
+    // obteniendo el numero para el simbolo
+    for (let j = 0; j < pr.length; j++) {
+      if (pr[j] == sub) {
+        simbolo = j;
+      }
+    }
+
+    estado = mt[estado][simbolo];
+
+    // mostrando resultado
+    if (
+      estado == qf[0] ||
+      estado == qf[1] ||
+      estado == qf[2] ||
+      estado == qf[3] ||
+      estado == qf[4] ||
+      estado == qf[5] ||
+      estado == qf[6] ||
+      estado == qf[7] ||
+      estado == qf[8] ||
+      estado == qf[9] ||
+      estado == qf[10] ||
+      estado == qf[11] ||
+      estado == qf[12] ||
+      estado == qf[13] ||
+      estado == qf[14] ||
+      estado == qf[15] ||
+      estado == qf[16] ||
+      estado == qf[17]
+    ) {
+      if (sub == " ") {
+        msg = 1;
+        if (estado == 5) {
+          console.log(colors.green("Indicador"));
+        }
+        if (estado == 7 || estado == 10 || estado == 63 || estado == 15) {
+          console.log(colors.green("Número Real"));
+        }
+        if (estado == 17 || estado == 19 || estado == 21 || estado == 23) {
+          console.log("Operador relacional".green);
+        }
+        if (
+          estado == 28 ||
+          estado == 30 ||
+          estado == 32 ||
+          estado == 37 ||
+          estado == 47 ||
+          estado == 43 ||
+          estado == 53 ||
+          estado == 62
+        ) {
+          console.log(colors.green("Palabra Reservada"));
+        }
+      } else {
+        console.log("Cadena Rechazada".red);
+      }
+      estado = 0;
+    } else {
+      if (
+        (cadena[i] == "+" && cadena[i + 1] == " ") ||
+        (cadena[i] == "-" && cadena[i + 1] == " ")
+      ) {
+        console.log("Cadena Rechazada".red);
+      }
+    }
+
+    // incrementando i
+    i++;
+  }
+};
+
+const indicadoresDesc = () => {
   console.log("===========================".green);
   console.log("   INDICADORES".rainbow);
   console.log("===========================\n".green);
   console.log(`
-* Los únicos caracteres permitidos para los identificadores son todos los caracteres ${"alfanuméricos".green},
+* Los únicos caracteres permitidos para los identificadores son todos los caracteres ${
+    "alfanuméricos".green
+  },
  ${"“$”".green}(signo de dólar) y ${"‘_’".green} (guión bajo).
 
 * Los identificadores no deben comenzar con dígitos (). Por ejemplo, “123java” no es un identificador de Java válido.
@@ -215,10 +316,10 @@ const indicadoresDesc=  () => {
 * No hay límite en la longitud del identificador, pero es aconsejable usar solamente una longitud óptima de 4 a 15 caracteres.
 
 * Las palabras reservadas no se pueden usar como un identificador.
-  `)
-}
+  `);
+};
 
-const numerosDesc=  () => {
+const numerosDesc = () => {
   console.log("===========================".green);
   console.log("   NÚMEROS REALES".rainbow);
   console.log("===========================\n".green);
@@ -228,10 +329,10 @@ const numerosDesc=  () => {
   
   ${"Ej".green}
       R = {-1, -2, -3 , 0 , 1 , 2 , 3 , 3.4 , 44.65 , -98.32 , etc..}
-  `)
-}
+  `);
+};
 
-const operadoresDesc=  () => {
+const operadoresDesc = () => {
   console.log("===========================".green);
   console.log("   NÚMEROS REALES".rainbow);
   console.log("===========================\n".green);
@@ -241,10 +342,10 @@ const operadoresDesc=  () => {
 
   ${"Simbolos:".green}
             { < , > , == , != , >= , <= }
-  `)
-}
+  `);
+};
 
-const palabrasDesc=  () => {
+const palabrasDesc = () => {
   console.log("===========================".green);
   console.log("   PALABRAS RESERVADAS".rainbow);
   console.log("===========================\n".green);
@@ -254,20 +355,18 @@ const palabrasDesc=  () => {
 
   ${"Palabras reservadas en el proyecto : ".green}
           {while,  do, for, class, return, float, public, protected}
-  `)
-}
+  `);
+};
 
-const integrantes =  () => {
+const integrantes = () => {
   console.log("================================".green);
   console.log("   INTEGRANTES DEL PROYECTO".rainbow);
   console.log("================================\n".green);
   console.log(`
     * Ninahuanca Ayala Victor Manuel
     * Uruchi Quispe Dania Daniela
-  `)
-}
-
-
+  `);
+};
 
 module.exports = {
   inquirerMenu,
@@ -279,5 +378,6 @@ module.exports = {
   numerosDesc,
   operadoresDesc,
   palabrasDesc,
-  integrantes
+  integrantes,
+  verificarToken,
 };

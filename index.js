@@ -10,6 +10,7 @@ const {
   operadoresDesc,
   palabrasDesc,
   integrantes,
+  verificarToken,
 } = require("./helpers/inquirer");
 const main = async () => {
   let op = "";
@@ -19,10 +20,14 @@ const main = async () => {
 
     switch (opt) {
       case "1":
-        const cadena = await leerInput("Ingrese una cadena:");
-        verificarCadena(cadena);
+        const cadena = await leerInput("Ingrese un token:");
+        verificarToken(cadena);
         break;
       case "2":
+        const cadena2 = await leerInput("Ingrese una cadena:");
+        verificarCadena(cadena2);
+        break;
+      case "3":
         const opt2 = await tokensDesc();
         switch (opt2) {
           case "1":
@@ -42,7 +47,7 @@ const main = async () => {
             break;
         }
         break;
-      case "3":
+      case "4":
         integrantes();
         break;
     }
